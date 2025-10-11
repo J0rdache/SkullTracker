@@ -40,5 +40,6 @@ Collection of projects in fields related to AI in various stages of completion
 
 ## ⚙️ How to Run Any Project
 Clone the repo:
+```bash
 git clone https://github.com/JohnnyPhil22/AI-Projects.git
 cd AI-Projects
