@@ -3,31 +3,31 @@ Collection of projects in fields related to AI in various stages of completion
 
 ## Projects
 ### 1. [Haircut Recommender](./haircut-recommender/)
-**Description:** Facial detection using OpenCV and Haar Cascade classifiers. Detects face type / structure and gives list of recommended hairstyles
-**Tech Stack:** Python, OpenCV
+**Description:** Facial detection using OpenCV and Haar Cascade classifiers. Detects face type / structure and gives list of recommended hairstyles<br>
+**Tech Stack:** Python, OpenCV<br>
 **Highlights:**
 -   Real-time webcam input
 
 ### 2. [Meeting Place Idea](./meeting-place-idea)
-**Description:** Prototype app concept that suggests ideal meeting locations between two or more users based on geographic midpoint and available venues (e.g., cafés, libraries).
-**Tech Stack:** Python, Flask, Google Maps API
-**Features:**
+**Description:** Prototype app concept that suggests ideal meeting locations between two or more users based on geographic midpoint and available venues (e.g., cafés, libraries).<br>
+**Tech Stack:** Python, Flask, Google Maps API<br>
+**Features:**<br>
 - Calculates optimal midpoint between users
 - Fetches venues using Maps API
 - (Planned) Integration with user preferences for smarter recommendations
 
 ### 3. [Nearest Face Detection and Lock - On](./nearest-face-detect/)
-**Description:** Real-time facial detection system using OpenCV and Haar Cascade classifiers. Tracks and locks onto the nearest face in the frame and updates dynamically.
-**Tech Stack:** Python, OpenCV
-**Highlights:**
+**Description:** Real-time facial detection system using OpenCV and Haar Cascade classifiers. Tracks and locks onto the nearest face in the frame and updates dynamically.<br>
+**Tech Stack:** Python, OpenCV<br>
+**Highlights:**<br>
 -   Real-time webcam input
 -   CSRT/KCF tracker integration for accuracy and speed
 -   Modular, expandable code design
 
 ### 4. [NLTK Text Tone Processing](./nltk-text-tone-processing/)
-**Description:** Sentiment analysis web app that processes user input text and determines tone using **NLTK’s VADER model**.
-**Tech Stack:** Python, Flask, NLTK, CSV, Chart.js
-**Features:**
+**Description:** Sentiment analysis web app that processes user input text and determines tone using **NLTK’s VADER model**.<br>
+**Tech Stack:** Python, Flask, NLTK, CSV, Chart.js<br>
+**Features:**<br>
 - Real-time tone detection
 - Data logging in CSV
 - Graphical sentiment history
