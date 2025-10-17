@@ -1,12 +1,17 @@
 import cv2, time
 
+# Load pre-trained face detection model (Haar Cascade)
 face_classifier = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
+# Init video capture using webcam (commented set resolution to 320x240 for performance to use to RPi)
 video_capture = cv2.VideoCapture(0)
+# video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+# video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
 
+# Function to detect the nearest (largest) face in the frame
 def detect_nearest_face(vid):
     gray_image = cv2.cvtColor(vid, cv2.COLOR_BGR2GRAY)
     faces = face_classifier.detectMultiScale(gray_image, 1.1, 5, minSize=(40, 40))
@@ -17,16 +22,40 @@ def detect_nearest_face(vid):
     return max(faces, key=lambda rect: rect[2] * rect[3])
 
 
-def create_tracker():  # Create a CSRT (more accurate) or KCF (faster) tracker based on installation
-    if hasattr(cv2, "legacy") and hasattr(cv2.legacy, "TrackerCSRT_create"):
-        return cv2.legacy.TrackerCSRT_create()
-    if hasattr(cv2, "TrackerCSRT_create"):
-        return cv2.TrackerCSRT_create()
-    if hasattr(cv2, "legacy") and hasattr(cv2.legacy, "TrackerKCF_create"):
+# Create a KCF (fast), MOSSE (faster) or CSRT (more accurate) tracker based on installation
+## Checking for legacy first to increase compatibility with older OpenCV versions
+def create_tracker():
+    if hasattr(cv2, "legacy") and hasattr(
+        cv2.legacy, "TrackerKCF_create"
+    ):  # Old version of KCF in new OpenCV
+        print("Using legacy KCF tracker")
         return cv2.legacy.TrackerKCF_create()
-    if hasattr(cv2, "TrackerKCF_create"):
+
+    if hasattr(cv2, "TrackerKCF_create"):  # Supported version of KCF in new OpenCV
+        print("Using KCF tracker")
         return cv2.TrackerKCF_create()
-    raise RuntimeError("No CSRT / KCF tracker found in installation")
+
+    if hasattr(cv2, "legacy") and hasattr(
+        cv2.legacy, "TrackerMOSSE_create"
+    ):  # Old version of MOSSE in new OpenCV
+        print("Using tracker: MOSSE (legacy)")
+        return cv2.legacy.TrackerMOSSE_create()
+
+    if hasattr(cv2, "TrackerMOSSE_create"):  # Supported version of MOSSE in new OpenCV
+        print("Using tracker: MOSSE")
+        return cv2.TrackerMOSSE_create()
+
+    if hasattr(cv2, "legacy") and hasattr(
+        cv2.legacy, "TrackerCSRT_create"
+    ):  # Old version of CSRT in new OpenCV
+        print("Using legacy CSRT tracker")
+        return cv2.legacy.TrackerCSRT_create()
+
+    if hasattr(cv2, "TrackerCSRT_create"):  # Supported version of CSRT in new OpenCV
+        print("Using CSRT tracker")
+        return cv2.TrackerCSRT_create()
+
+    raise RuntimeError("No CSRT / KCF / MOSSE tracker found in installation")
 
 
 tracker = None
@@ -35,15 +64,15 @@ lost_since = None  # time since losing lock
 REDETECT_DELAY = 2.0  # seconds to wait before re-detecting after losing lock
 WIN, last_print = "Face Detection and Lock-On", 0
 
+print("--------------- Acquiring Face Lock ---------------")
 while True:
-    result, vid_frame = video_capture.read()  # read frames from the video
+    result, vid_frame = video_capture.read()  # read frames from video
     if not result:
-        break  # terminate the loop if the frame is not read successfully
+        break  # terminate loop if frame not read successfully
 
-    H, W = vid_frame.shape[:2]  # take H and W of the frame for bounds checking
+    H, W = vid_frame.shape[:2]  # take H and W of frame (window) for bounds checking
 
-    if not locked:
-        # Not tracking -> detect nearest face and lock on
+    if not locked:  # Detection phase
         bbox = detect_nearest_face(vid_frame)
         if bbox is not None:
             tracker = create_tracker()
@@ -57,8 +86,7 @@ while True:
             if current - last_print >= 0.5:
                 print(f"Subject locked: x={x}, y={y}, w={w}, h={h}")
                 last_print = current
-    else:
-        # Tracking phase
+    else:  # Tracking phase
         success, newbox = tracker.update(vid_frame)
         if success:
             x, y, w, h = map(int, newbox)
@@ -74,17 +102,18 @@ while True:
             else:
                 success = False
 
-        if not success:
+        if not success:  # Lost tracking
             if lost_since is None:
                 lost_since = time.time()
 
             if time.time() - lost_since >= REDETECT_DELAY:
                 tracker = None
                 locked = False
-                print("---------------- Re-acquiring lock ----------------")
+                print("---------------- Re-Acquiring Lock ----------------")
 
-    cv2.imshow(WIN, vid_frame)  # display the processed frame in a window
+    cv2.imshow(WIN, vid_frame)  # Display processed frame in a window
 
+    # Exit conditions
     if (cv2.waitKey(1) & 0xFF == ord("q")) or (
         cv2.getWindowProperty(WIN, cv2.WND_PROP_VISIBLE) < 1
     ):
