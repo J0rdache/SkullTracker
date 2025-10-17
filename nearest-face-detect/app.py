@@ -5,16 +5,25 @@ face_classifier = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
-# Init video capture using webcam (commented set resolution to 320x240 for performance to use to RPi)
+# Init video capture using webcam
 video_capture = cv2.VideoCapture(0)
-# video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-# video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
+"""
+# Set resolution to 320x240, 8FPS for performance to use on RPi
+video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+video_capture.set(cv2.CAP_PROP_FPS, 8)
+"""
 
 
 # Function to detect the nearest (largest) face in the frame
 def detect_nearest_face(vid):
     gray_image = cv2.cvtColor(vid, cv2.COLOR_BGR2GRAY)
     faces = face_classifier.detectMultiScale(gray_image, 1.1, 5, minSize=(40, 40))
+    """
+    # For RPi use the below line instead for faster but less accurate detection
+    faces = face_classifier.detectMultiScale(gray_image, 1.1, 2, minSize=(1, 1))
+    """
 
     if len(faces) == 0:
         return None
