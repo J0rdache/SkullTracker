@@ -5,11 +5,11 @@ import threading
 import time
 
 # (Pixels)
-CAMERA_WIDTH = 320
+CAMERA_WIDTH = 1920
 # (Pixels)
-CAMERA_HEIGHT = 240
+CAMERA_HEIGHT = 1080
 # (Frames per second)
-CAMERA_FPS = 60
+CAMERA_FPS = 8
 # (N)
 CAMERA_INDEX = 0
 # (File containing cascade classifier)
@@ -17,7 +17,7 @@ CASCADE_CLASSIFIER = 'haarcascade_frontalface_alt.xml'
 # (multiplier greater than 1)
 SCALE_FACTOR = 1.1
 # (N)
-MIN_NEIGHBORS = 5
+MIN_NEIGHBORS = 8
 # (Pixels, Pixels)
 MIN_SIZE = (1, 1)
 # (Multiplier)
