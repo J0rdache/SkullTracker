@@ -25,9 +25,9 @@ MOTION_TOLERANCE = 0.75
 # (Seconds)
 TRACKING_GRACE = 0.5
 # (Number of frames)
-ROLLING_AVG_COUNT = 10
+ROLLING_AVG_COUNT = 5
 # (Pixels)
-CENTER_WIDTH = 80
+CENTER_WIDTH = 120
 # (N)
 SERVO_PIN = 18
 # (Pulse width ms)
