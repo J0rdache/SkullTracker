@@ -15,9 +15,9 @@ CAMERA_INDEX = 0
 # (File containing cascade classifier)
 CASCADE_CLASSIFIER = 'haarcascade_frontalface_alt.xml'
 # (multiplier greater than 1)
-SCALE_FACTOR = 1.2
+SCALE_FACTOR = 1.1
 # (N)
-MIN_NEIGHBORS = 2
+MIN_NEIGHBORS = 5
 # (Pixels, Pixels)
 MIN_SIZE = (1, 1)
 # (Multiplier)
@@ -35,7 +35,7 @@ SERVO_MIN = 0.5
 # (Pulse width ms)
 SERVO_MAX = 2.5
 # (Degrees per second)
-SPEED = 35
+SPEED = 70
 # (Boolean)
 REVERSE = True
 
