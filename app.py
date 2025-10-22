@@ -34,32 +34,6 @@ def detect_nearest_face(vid):
 # Create a KCF (fast), MOSSE (faster) or CSRT (more accurate) tracker based on installation
 ## Checking for legacy first to increase compatibility with older OpenCV versions
 def create_tracker():
-    if hasattr(cv2, "legacy") and hasattr(
-        cv2.legacy, "TrackerKCF_create"
-    ):  # Old version of KCF in new OpenCV
-        print("Using legacy KCF tracker")
-        return cv2.legacy.TrackerKCF_create()
-
-    if hasattr(cv2, "TrackerKCF_create"):  # Supported version of KCF in new OpenCV
-        print("Using KCF tracker")
-        return cv2.TrackerKCF_create()
-
-    if hasattr(cv2, "legacy") and hasattr(
-        cv2.legacy, "TrackerMOSSE_create"
-    ):  # Old version of MOSSE in new OpenCV
-        print("Using tracker: MOSSE (legacy)")
-        return cv2.legacy.TrackerMOSSE_create()
-
-    if hasattr(cv2, "TrackerMOSSE_create"):  # Supported version of MOSSE in new OpenCV
-        print("Using tracker: MOSSE")
-        return cv2.TrackerMOSSE_create()
-
-    if hasattr(cv2, "legacy") and hasattr(
-        cv2.legacy, "TrackerCSRT_create"
-    ):  # Old version of CSRT in new OpenCV
-        print("Using legacy CSRT tracker")
-        return cv2.legacy.TrackerCSRT_create()
-
     if hasattr(cv2, "TrackerCSRT_create"):  # Supported version of CSRT in new OpenCV
         print("Using CSRT tracker")
         return cv2.TrackerCSRT_create()

@@ -26,6 +26,8 @@ class FaceTracker:
         self.faces = []
         self.targetFace = None
         self.lastGraceTime = time.time()
+        self.locked = False
+        self.tracker = None
         self.targetXList = []
         self.xListPos = 0
         self.targetAvgX = None
@@ -50,6 +52,12 @@ class FaceTracker:
                 largestFace = (x, y, w, h)
         return largestFace
     
+    def create_tracker(self):
+        if hasattr(cv2, "TrackerCSRT_create"):
+            print("Using CSRT tracker")
+            return cv2.TrackerCSRT_create()
+        raise RuntimeError("Tracker not found in opencv installation.")
+
     def trackTargetFace(self):
         (lx, ly, lw, lh) = self.targetFace
         ht = self.MotionTolerance * lw
@@ -89,16 +97,24 @@ class FaceTracker:
 
         self.faces = self.face_cascade.detectMultiScale(gray, scaleFactor=self.ScaleFactor, minNeighbors=self.MinNeighbors, minSize=self.MinSize)
 
-        if self.targetFace is None:
-            self.targetFace = self.findTarget()
+        if not self.locked:
+            targetFace = self.findTarget()
+            if targetFace is not None:
+                self.tracker = self.create_tracker()
+                self.tracker.init(frame, tuple(targetFace))
+                self.locked = True
+                self.lastGraceTime = None
         else:
-            # Attempt to find the targeted face in the new frame
-            updatedFace = self.trackTargetFace()
-            if updatedFace is not None:
-                self.targetFace = updatedFace
-                self.lastGraceTime = time.time()
-            elif time.time() - self.lastGraceTime > self.TrackingGrace:
-                self.targetFace = None
+            success, newTarget = self.tracker.update(frame)
+            if success:
+                self.lastGraceTime = None
+            else:
+                if self.lastGraceTime is None:
+                    self.lastGraceTime = time.time()
+                if time.time() - self.lastGraceTime >= self.TrackingGrace:
+                    self.tracker = None
+                    self.locked = False
+    
         if self.targetFace is not None:
             centerX = self.targetFace[0] + self.targetFace[2] // 2
             if len(self.targetXList) < self.RollingAvgCount:
