@@ -15,7 +15,7 @@ CAMERA_INDEX = 0
 # (File containing cascade classifier)
 CASCADE_CLASSIFIER = 'haarcascade_frontalface_alt.xml'
 # (multiplier greater than 1)
-SCALE_FACTOR = 1.1
+SCALE_FACTOR = 1.2
 # (N)
 MIN_NEIGHBORS = 8
 # (Pixels, Pixels)
@@ -25,7 +25,7 @@ MOTION_TOLERANCE = 0.75
 # (Seconds)
 TRACKING_GRACE = 0.5
 # (Number of frames)
-ROLLING_AVG_COUNT = 1
+ROLLING_AVG_COUNT = 10
 # (Pixels)
 CENTER_WIDTH = 120
 # (N)
