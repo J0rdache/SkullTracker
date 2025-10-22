@@ -105,8 +105,10 @@ class FaceTracker:
                 self.locked = True
                 self.lastGraceTime = None
         else:
-            success, newTarget = self.tracker.update(frame)
-            if success:
+            success, self.targetFace = self.tracker.update(frame)
+            (x, y, w, h) = self.targetFace
+            in_frame = x >= 0 & x + w < self.camInfo['width'] & y > 0 & y < self.camInfo['height']
+            if success & in_frame:
                 self.lastGraceTime = None
             else:
                 if self.lastGraceTime is None:
@@ -137,7 +139,7 @@ class FaceTracker:
         #cv2.imshow('USRT Face Tracking', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             return 0
-        if not len(self.faces) and time.time() - self.lastGraceTime > self.TrackingGrace:
+        if not len(self.faces) and not self.locked:
             return 1
         elif self.targetAvgX > self.camInfo['width'] // 2 - self.CenterWidth // 2 and self.targetAvgX < self.camInfo['width'] // 2 + self.CenterWidth // 2:
             return 2
