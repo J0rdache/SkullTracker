@@ -23,6 +23,7 @@ class FaceTracker:
             "height": int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)),
             "fps": int(self.cap.get(cv2.CAP_PROP_FPS))
         }
+        print(self.camInfo['fps'])
         self.faces = []
         self.targetFace = None
         self.lastGraceTime = time.time()
