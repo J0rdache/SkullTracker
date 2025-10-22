@@ -99,6 +99,7 @@ class FaceTracker:
         self.faces = self.face_cascade.detectMultiScale(gray, scaleFactor=self.ScaleFactor, minNeighbors=self.MinNeighbors, minSize=self.MinSize)
 
         if not self.locked or time.time() - self.lastAcquireTime > 15:
+            self.locked = False
             targetFace = self.findTarget()
             if targetFace is not None:
                 print("New face found")
