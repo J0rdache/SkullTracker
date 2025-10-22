@@ -101,12 +101,12 @@ class FaceTracker:
 
         if not self.locked or time.time() - self.lastAcquireTime > 10:
             self.locked = False
-            targetFace = self.findTarget()
-            if targetFace is not None:
+            self.targetFace = self.findTarget()
+            if self.targetFace is not None:
                 print("New face found")
                 self.lastAcquireTime = time.time()
                 self.tracker = self.create_tracker()
-                self.tracker.init(frame, tuple(targetFace))
+                self.tracker.init(frame, tuple(self.targetFace))
                 self.locked = True
                 self.lastGraceTime = None
         else:
