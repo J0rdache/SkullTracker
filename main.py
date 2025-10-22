@@ -27,7 +27,7 @@ TRACKING_GRACE = 0.5
 # (Number of frames)
 ROLLING_AVG_COUNT = 5
 # (Pixels)
-CENTER_WIDTH = 30
+CENTER_WIDTH = 60
 # (N)
 SERVO_PIN = 18
 # (Pulse width ms)
