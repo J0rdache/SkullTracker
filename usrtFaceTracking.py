@@ -141,12 +141,13 @@ class FaceTracker:
             return 0
         if not len(self.faces) and not self.locked:
             return 1
-        elif self.targetAvgX > self.camInfo['width'] // 2 - self.CenterWidth // 2 and self.targetAvgX < self.camInfo['width'] // 2 + self.CenterWidth // 2:
-            return 2
-        elif self.targetAvgX < self.camInfo['width'] // 2:
-            return 3
-        elif self.targetAvgX > self.camInfo['width'] // 2:
-            return 4
+        if self.locked:
+            if self.targetAvgX > self.camInfo['width'] // 2 - self.CenterWidth // 2 and self.targetAvgX < self.camInfo['width'] // 2 + self.CenterWidth // 2:
+                return 2
+            elif self.targetAvgX < self.camInfo['width'] // 2:
+                return 3
+            elif self.targetAvgX > self.camInfo['width'] // 2:
+                return 4
 
 
         
