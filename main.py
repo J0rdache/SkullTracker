@@ -25,7 +25,7 @@ MOTION_TOLERANCE = 0.75
 # (Seconds)
 TRACKING_GRACE = 0.5
 # (Number of frames)
-ROLLING_AVG_COUNT = 1
+ROLLING_AVG_COUNT = 10
 # (Pixels)
 CENTER_WIDTH = 120
 # (N)
