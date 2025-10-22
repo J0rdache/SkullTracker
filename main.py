@@ -25,7 +25,7 @@ MOTION_TOLERANCE = 0.75
 # (Seconds)
 TRACKING_GRACE = 0.5
 # (Number of frames)
-ROLLING_AVG_COUNT = 1
+ROLLING_AVG_COUNT = 5
 # (Pixels)
 CENTER_WIDTH = 120
 # (N)
@@ -35,7 +35,7 @@ SERVO_MIN = 0.5
 # (Pulse width ms)
 SERVO_MAX = 2.5
 # (Degrees per second)
-SPEED = 35
+SPEED = 20
 # (Boolean)
 REVERSE = True
 
