@@ -9,7 +9,7 @@ CAMERA_WIDTH = 1920
 # (Pixels)
 CAMERA_HEIGHT = 1080
 # (Frames per second)
-CAMERA_FPS = 8
+CAMERA_FPS = 30
 # (N)
 CAMERA_INDEX = 0
 # (File containing cascade classifier)
@@ -27,7 +27,7 @@ TRACKING_GRACE = 0.5
 # (Number of frames)
 ROLLING_AVG_COUNT = 1
 # (Pixels)
-CENTER_WIDTH = 60
+CENTER_WIDTH = 300
 # (N)
 SERVO_PIN = 18
 # (Pulse width ms)
