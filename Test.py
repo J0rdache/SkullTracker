@@ -1,5 +1,5 @@
 import usrtFaceTracking as ft
-import servoControllerAltUSB as sc
+import servoController as sc
 import queue
 import threading
 import time
