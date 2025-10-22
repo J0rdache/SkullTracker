@@ -26,6 +26,7 @@ class FaceTracker:
         self.faces = []
         self.targetFace = None
         self.lastGraceTime = time.time()
+        self.lastAcquireTime = time.time()
         self.locked = False
         self.tracker = None
         self.targetXList = []
@@ -97,9 +98,10 @@ class FaceTracker:
 
         self.faces = self.face_cascade.detectMultiScale(gray, scaleFactor=self.ScaleFactor, minNeighbors=self.MinNeighbors, minSize=self.MinSize)
 
-        if not self.locked:
+        if not self.locked or time.time() - self.lastAcquireTime > 30:
             targetFace = self.findTarget()
             if targetFace is not None:
+                self.lastAcquireTime = time.time()
                 self.tracker = self.create_tracker()
                 self.tracker.init(frame, tuple(targetFace))
                 self.locked = True
