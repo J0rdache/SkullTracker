@@ -19,7 +19,7 @@ SCALE_FACTOR = 1.2
 # (N)
 MIN_NEIGHBORS = 5
 # (Pixels, Pixels)
-MIN_SIZE = (1, 1)
+MIN_SIZE = (25, 25)
 # (Multiplier)
 MOTION_TOLERANCE = 0.75
 # (Seconds)
