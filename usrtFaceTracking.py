@@ -110,34 +110,12 @@ class FaceTracker:
                 self.tracker.init(frame, tuple(self.targetFace))
                 self.locked = True
                 self.lastGraceTime = None
-            else:
-                currentTime = time.time()
-                if self.lastGraceTime is None:
-                    self.lastGraceTime = currentTime
-                if currentTime - self.lastGraceTime >= self.TrackingGrace:
-                    print("Time: ")
-                    print(currentTime - self.lastGraceTime)
-                    print("Lost lock")
-                    self.tracker = None
-                    self.locked = False
-                    self.targetFace = None
         else:
             success, self.targetFace = self.tracker.update(frame)
             (x, y, w, h) = self.targetFace
             in_frame = x >= 0 & x + w < self.camInfo['width'] & y > 0 & y + h < self.camInfo['height']
             if success & in_frame:
                 self.lastGraceTime = None
-            else:
-                currentTime = time.time()
-                if self.lastGraceTime is None:
-                    self.lastGraceTime = currentTime
-                if currentTime - self.lastGraceTime >= self.TrackingGrace:
-                    print("Time: ")
-                    print(currentTime - self.lastGraceTime)
-                    print("Lost lock")
-                    self.tracker = None
-                    self.locked = False
-                    self.targetFace = None
     
         if self.targetFace is not None:
             centerX = self.targetFace[0] + self.targetFace[2] // 2
@@ -162,7 +140,13 @@ class FaceTracker:
         if cv2.waitKey(1) & 0xFF == ord('q'):
             return 400
         if not len(self.faces) and not self.locked:
-            return 401
+            currentTime = time.time()
+            if self.lastGraceTime is None:
+                self.lastGraceTime = currentTime
+            if currentTime - self.lastAcquireTime >= self.TrackingGrace
+                return 401
+        else:
+            self.lastGraceTime = None
         if self.locked:
             if self.targetAvgX > self.camInfo['width'] // 2 - self.CenterWidth // 2 and self.targetAvgX < self.camInfo['width'] // 2 + self.CenterWidth // 2:
                 return 0
