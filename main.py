@@ -66,7 +66,7 @@ def main():
         while True:
             status = tracker1.update()
             fifoQueue.put(status)
-            print(status)
+            #print(status)
             if status == 400:
                 break
         t_servo.join()

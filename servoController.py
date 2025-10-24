@@ -41,5 +41,6 @@ class ServoController:
                 self.currentDuty += self.speed * 0.02 * self.status / 10
             else:
                 self.currentDuty = self.maxDuty
+        print(self.currentDuty)
         self.pwm.change_duty_cycle(self.currentDuty)
         #print((self.currentDuty - self.minDuty) / (self.maxDuty - self.minDuty) * 180)
