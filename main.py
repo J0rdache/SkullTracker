@@ -17,7 +17,7 @@ CASCADE_CLASSIFIER = 'haarcascade_frontalface_alt.xml'
 # (multiplier greater than 1)
 SCALE_FACTOR = 1.2
 # (N)
-MIN_NEIGHBORS = 5
+MIN_NEIGHBORS = 8
 # (Pixels, Pixels)
 MIN_SIZE = (1, 1)
 # (Multiplier)
