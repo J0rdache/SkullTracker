@@ -146,7 +146,7 @@ class FaceTracker:
         #cv2.imshow('USRT Face Tracking', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             return 400
-        if not len(self.faces) or not self.locked:
+        if not len(self.faces) and not self.locked:
             return 401
         if self.locked:
             if self.targetAvgX > self.camInfo['width'] // 2 - self.CenterWidth // 2 and self.targetAvgX < self.camInfo['width'] // 2 + self.CenterWidth // 2:
@@ -155,6 +155,8 @@ class FaceTracker:
                 return self.targetAvgX / (self.camInfo['width'] // 2) * 10
             elif self.targetAvgX > self.camInfo['width'] // 2:
                 return -(self.targetAvgX - self.camInfo['width'] // 2) / self.camInfo['width'] * 10
+        else:
+            return 0
         return 400
 
 
