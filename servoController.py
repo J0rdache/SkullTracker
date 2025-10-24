@@ -37,7 +37,7 @@ class ServoController:
             else:
                 self.currentDuty = self.minDuty
         elif self.status < 0:
-            if (self.currentDuty + self.speed * 0.02 * self.status / 10 < self.maxDuty):
+            if (self.currentDuty + self.speed * 0.02 * (self.status / 10) < self.maxDuty):
                 self.currentDuty += self.speed * 0.02 * (self.status / 10)
             else:
                 self.currentDuty = self.maxDuty
