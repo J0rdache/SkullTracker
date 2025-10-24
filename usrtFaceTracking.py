@@ -169,7 +169,7 @@ class FaceTracker:
             elif self.targetAvgX > self.camInfo['width'] // 2:
                 return -(self.targetAvgX - self.camInfo['width'] // 2) / self.camInfo['width'] * 10
         else:
-            return 401
+            return 0
         return 400
 
 
