@@ -154,9 +154,11 @@ class FaceTracker:
             return 400
         if not len(self.faces) and not self.locked:
             currentTime = time.time()
+            print("Waiting...")
             if self.lastGraceTime is None:
                 self.lastGraceTime = currentTime
             if currentTime - self.lastAcquireTime >= self.TrackingGrace:
+                print("Return to center!")
                 return 401
         else:
             self.lastGraceTime = None
