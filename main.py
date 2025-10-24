@@ -71,7 +71,7 @@ def main():
                 break
         t_servo.join()
     except KeyboardInterrupt:
-        fifoQueue.put(0)
+        fifoQueue.put(400)
         t_servo.join()
 
     
