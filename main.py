@@ -66,6 +66,7 @@ def main():
         while True:
             status = tracker1.update()
             fifoQueue.put(status)
+            print("Status: ")
             print(status)
             if status == 400:
                 break
