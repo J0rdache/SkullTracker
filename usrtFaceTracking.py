@@ -116,6 +116,19 @@ class FaceTracker:
             in_frame = x >= 0 & x + w < self.camInfo['width'] & y > 0 & y + h < self.camInfo['height']
             if success & in_frame:
                 self.lastGraceTime = None
+            '''
+            else:
+                currentTime = time.time()
+                if self.lastGraceTime is None:
+                    self.lastGraceTime = currentTime
+                if currentTime - self.lastGraceTime >= self.TrackingGrace:
+                    print("Time: ")
+                    print(currentTime - self.lastGraceTime)
+                    print("Lost lock")
+                    self.tracker = None
+                    self.locked = False
+                    self.targetFace = None
+            '''
     
         if self.targetFace is not None:
             centerX = self.targetFace[0] + self.targetFace[2] // 2
@@ -143,7 +156,7 @@ class FaceTracker:
             currentTime = time.time()
             if self.lastGraceTime is None:
                 self.lastGraceTime = currentTime
-            if currentTime - self.lastAcquireTime >= self.TrackingGrace
+            if currentTime - self.lastAcquireTime >= self.TrackingGrace:
                 return 401
         else:
             self.lastGraceTime = None
