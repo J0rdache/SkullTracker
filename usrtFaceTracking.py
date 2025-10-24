@@ -145,16 +145,16 @@ class FaceTracker:
         frame = self.drawOnFrame(frame)
         #cv2.imshow('USRT Face Tracking', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
-            return 0
+            return 400
         if not len(self.faces) and not self.locked:
-            return 1
+            return 401
         if self.locked:
             if self.targetAvgX > self.camInfo['width'] // 2 - self.CenterWidth // 2 and self.targetAvgX < self.camInfo['width'] // 2 + self.CenterWidth // 2:
-                return 2
+                return 0
             elif self.targetAvgX < self.camInfo['width'] // 2:
-                return 3
+                return -self.targetAvgX / (self.camInfo['width'] // 2) * 10
             elif self.targetAvgX > self.camInfo['width'] // 2:
-                return 4
+                return (self.targetAvgx - self.camInfo['width'] // 2) / self.camInfo['width'] * 10
 
 
         

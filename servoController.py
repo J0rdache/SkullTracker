@@ -22,7 +22,7 @@ class ServoController:
         self.status = status
     
     def runServoLoop(self):
-        if self.status == 1:
+        if self.status == 401:
             targetDuty = self.minDuty + (self.maxDuty - self.minDuty) / 2
             if abs(self.currentDuty - targetDuty) > self.speed * 0.02:
                 if self.currentDuty > targetDuty:
@@ -31,14 +31,14 @@ class ServoController:
                     self.currentDuty += self.speed * 0.02
             else:
                 self.currentDuty = targetDuty
-        elif self.status == 3 + self.reversed:
-            if (self.currentDuty - self.speed * 0.02 > self.minDuty):
-                self.currentDuty -= self.speed * 0.02
+        elif self.status > 0:
+            if (self.currentDuty + self.speed * 0.02 * self.status / 10 > self.minDuty):
+                self.currentDuty += self.speed * 0.02 * self.status / 10
             else:
                 self.currentDuty = self.minDuty
-        elif self.status == 4 - self.reversed:
-            if (self.currentDuty + self.speed * 0.02 < self.maxDuty):
-                self.currentDuty += self.speed * 0.02
+        elif self.status < 0:
+            if (self.currentDuty - self.speed * 0.02 * self.status / 10 < self.maxDuty):
+                self.currentDuty -= self.speed * 0.02 * self.status / 10
             else:
                 self.currentDuty = self.maxDuty
         self.pwm.change_duty_cycle(self.currentDuty)

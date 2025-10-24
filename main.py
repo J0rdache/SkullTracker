@@ -67,7 +67,7 @@ def main():
             status = tracker1.update()
             fifoQueue.put(status)
             #print(status)
-            if status == 0:
+            if status == 400:
                 break
         t_servo.join()
     except KeyboardInterrupt:
