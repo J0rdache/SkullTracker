@@ -158,6 +158,7 @@ class FaceTracker:
             if self.lastGraceTime is None:
                 self.lastGraceTime = currentTime
             if currentTime - self.lastAcquireTime >= self.TrackingGrace:
+                self.lastGraceTime = None
                 print("Return to center!")
                 return 401
         else:
