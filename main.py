@@ -9,7 +9,7 @@ CAMERA_WIDTH = 640
 # (Pixels)
 CAMERA_HEIGHT = 480
 # (Frames per second)
-CAMERA_FPS = 15
+CAMERA_FPS = 30
 # (N)
 CAMERA_INDEX = 0
 # (File containing cascade classifier)
