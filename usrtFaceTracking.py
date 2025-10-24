@@ -100,15 +100,27 @@ class FaceTracker:
         self.faces = self.face_cascade.detectMultiScale(gray, scaleFactor=self.ScaleFactor, minNeighbors=self.MinNeighbors, minSize=self.MinSize)
 
         if not self.locked or time.time() - self.lastAcquireTime > 10:
+            
             self.locked = False
             self.targetFace = self.findTarget()
             if self.targetFace is not None:
-                print("New face found")
+                
                 self.lastAcquireTime = time.time()
                 self.tracker = self.create_tracker()
                 self.tracker.init(frame, tuple(self.targetFace))
                 self.locked = True
                 self.lastGraceTime = None
+            else:
+                currentTime = time.time()
+                if self.lastGraceTime is None:
+                    self.lastGraceTime = currentTime
+                if currentTime - self.lastGraceTime >= self.TrackingGrace:
+                    print("Time: ")
+                    print(currentTime - self.lastGraceTime)
+                    print("Lost lock")
+                    self.tracker = None
+                    self.locked = False
+                    self.targetFace = None
         else:
             success, self.targetFace = self.tracker.update(frame)
             (x, y, w, h) = self.targetFace
