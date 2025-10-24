@@ -120,6 +120,8 @@ class FaceTracker:
                 if self.lastGraceTime is None:
                     self.lastGraceTime = currentTime
                 if currentTime - self.lastGraceTime >= self.TrackingGrace:
+                    print("Time: ")
+                    print(currentTime - self.lastGraceTime)
                     print("Lost lock")
                     self.tracker = None
                     self.locked = False
