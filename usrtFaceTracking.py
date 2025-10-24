@@ -115,6 +115,7 @@ class FaceTracker:
             (x, y, w, h) = self.targetFace
             in_frame = x >= 0 & x + w < self.camInfo['width'] & y > 0 & y + h < self.camInfo['height']
             if success & in_frame:
+                print("Success!")
                 self.lastGraceTime = None
             '''
             else:
