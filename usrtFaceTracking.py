@@ -115,11 +115,9 @@ class FaceTracker:
             (x, y, w, h) = self.targetFace
             in_frame = x >= 0 & x + w < self.camInfo['width'] & y > 0 & y + h < self.camInfo['height']
             if success & in_frame:
-                print("Success!")
+                #print("Success!")
                 self.lastGraceTime = None
-            else:
-                print("Failure")
-            '''
+            
             else:
                 currentTime = time.time()
                 if self.lastGraceTime is None:
@@ -131,7 +129,7 @@ class FaceTracker:
                     self.tracker = None
                     self.locked = False
                     self.targetFace = None
-            '''
+            
     
         if self.targetFace is not None:
             centerX = self.targetFace[0] + self.targetFace[2] // 2
