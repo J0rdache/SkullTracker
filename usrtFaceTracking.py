@@ -117,6 +117,8 @@ class FaceTracker:
             if success & in_frame:
                 print("Success!")
                 self.lastGraceTime = None
+            else:
+                print("Failure")
             '''
             else:
                 currentTime = time.time()
