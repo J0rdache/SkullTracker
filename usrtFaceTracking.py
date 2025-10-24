@@ -155,6 +155,7 @@ class FaceTracker:
                 return self.targetAvgX / (self.camInfo['width'] // 2) * 10
             elif self.targetAvgX > self.camInfo['width'] // 2:
                 return -(self.targetAvgX - self.camInfo['width'] // 2) / self.camInfo['width'] * 10
+        return 400
 
 
         
