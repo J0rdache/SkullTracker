@@ -27,7 +27,7 @@ TRACKING_GRACE = 0.5
 # (Number of frames)
 ROLLING_AVG_COUNT = 1
 # (Pixels)
-CENTER_WIDTH = 120
+CENTER_WIDTH = 160
 # (N)
 SERVO_PIN = 18
 # (Pulse width ms)
@@ -35,7 +35,7 @@ SERVO_MIN = 0.5
 # (Pulse width ms)
 SERVO_MAX = 2.5
 # (Degrees per second)
-SPEED = 35
+SPEED = 30
 # (Boolean)
 REVERSE = True
 
