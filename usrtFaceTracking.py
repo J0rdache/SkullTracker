@@ -158,9 +158,10 @@ class FaceTracker:
             if self.lastGraceTime is None:
                 self.lastGraceTime = currentTime
             if currentTime - self.lastGraceTime >= self.TrackingGrace:
-                self.lastGraceTime = None
                 print("Return to center!")
                 return 401
+        else:
+            self.lastGraceTime = None
         if self.locked:
             if self.targetAvgX > self.camInfo['width'] // 2 - self.CenterWidth // 2 and self.targetAvgX < self.camInfo['width'] // 2 + self.CenterWidth // 2:
                 return 0
