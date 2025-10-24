@@ -45,7 +45,7 @@ def servo_thread(servo):
     while True:
         try:
             status = fifoQueue.get(block=False)
-            if status == 0:
+            if status == 401:
                 break
             servo.updateStatus(status)
         except queue.Empty:
