@@ -110,6 +110,9 @@ class FaceTracker:
                 self.tracker.init(frame, tuple(self.targetFace))
                 self.locked = True
                 self.lastGraceTime = None
+            else:
+                self.targetXList = []
+                self.targetAvgX = 0
         else:
             success, bbox = self.tracker.update(frame)
             if success:
