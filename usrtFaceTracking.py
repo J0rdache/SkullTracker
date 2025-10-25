@@ -111,25 +111,29 @@ class FaceTracker:
                 self.locked = True
                 self.lastGraceTime = None
         else:
-            success, newtargetFace = self.tracker.update(frame)
-            (x, y, w, h) = newtargetFace
-            in_frame = x >= 0 & x + w < self.camInfo['width'] & y > 0 & y + h < self.camInfo['height']
-            if success and in_frame:
-                #print("Success!")
-                self.targetFace = newtargetFace
-                self.lastGraceTime = None
+            success, bbox = self.tracker.update(frame)
+            if success:
+                (x, y, w, h) = [int(v) for v in bbox]
+                in_frame = x >= 0 and x + w < self.camInfo['width'] and y > 0 and y + h < self.camInfo['height']
+                if in_frame:
+                    self.targetFace = (x, y, w, h)
+                    self.lastGraceTime = None
+                else:
+                    success = False
             
-            else:
-                currentTime = time.time()
-                if self.lastGraceTime is None:
-                    self.lastGraceTime = currentTime
-                if currentTime - self.lastGraceTime >= self.TrackingGrace:
-                    print("Time: ")
-                    print(currentTime - self.lastGraceTime)
-                    print("Lost lock")
-                    self.tracker = None
-                    self.locked = False
-                    self.targetFace = None
+                if not success:
+                    currentTime = time.time()
+                    if self.lastGraceTime is None:
+                        self.lastGraceTime = currentTime
+                    if currentTime - self.lastGraceTime >= self.TrackingGrace:
+                        print("Time: ")
+                        print(currentTime - self.lastGraceTime)
+                        print("Lost lock")
+                        self.tracker = None
+                        self.locked = False
+                        self.targetFace = None
+                        self.targetXList = []
+                        self.targetAvgX = 0
             
     
         if self.targetFace is not None:
