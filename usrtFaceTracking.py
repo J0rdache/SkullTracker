@@ -28,6 +28,8 @@ class FaceTracker:
         self.targetFace = None
         self.lastGraceTime = time.time()
         self.lastAcquireTime = time.time()
+        self.lastTrackFailTime = None
+        self.lastNoFaceTime = None
         self.locked = False
         self.tracker = None
         self.targetXList = []
@@ -40,6 +42,7 @@ class FaceTracker:
         self.TrackingGrace = TrackingGrace
         self.RollingAvgCount = RollingAvgCount
         self.CenterWidth = CenterWidth
+
 
     def __del__(self):
         self.cap.release()
@@ -123,11 +126,11 @@ class FaceTracker:
             
                 if not success:
                     currentTime = time.time()
-                    if self.lastGraceTime is None:
+                    if self.lastTrackFailTime is None:
                         self.lastGraceTime = currentTime
-                    if currentTime - self.lastGraceTime >= self.TrackingGrace:
+                    if currentTime - self.lastTrackFailTime >= self.TrackingGrace:
                         print("Time: ")
-                        print(currentTime - self.lastGraceTime)
+                        print(currentTime - self.lastTrackFailTime)
                         print("Lost lock")
                         self.tracker = None
                         self.locked = False
@@ -159,9 +162,9 @@ class FaceTracker:
         if not len(self.faces) and not self.locked:
             currentTime = time.time()
             #print("Waiting...")
-            if self.lastGraceTime is None:
-                self.lastGraceTime = currentTime
-            if currentTime - self.lastGraceTime >= self.TrackingGrace:
+            if self.lastNoFaceTime is None:
+                self.lastNoFaceTime = currentTime
+            if currentTime - self.lastNoFaceTime >= self.TrackingGrace:
                 #print("Return to center!")
                 return 401
         else:
