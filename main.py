@@ -23,7 +23,7 @@ MIN_SIZE = (1, 1)
 # (Multiplier)
 MOTION_TOLERANCE = 0.75
 # (Seconds)
-TRACKING_GRACE = 1.5
+TRACKING_GRACE = 0.75
 # (Number of frames)
 ROLLING_AVG_COUNT = 1
 # (Pixels)
