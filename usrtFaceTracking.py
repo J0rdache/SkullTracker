@@ -112,7 +112,7 @@ class FaceTracker:
                 self.tracker = self.create_tracker()
                 self.tracker.init(frame, tuple(self.targetFace))
                 self.locked = True
-                self.lastGraceTime = None
+                self.lastNoFaceTime = None
         else:
             success, bbox = self.tracker.update(frame)
             if success:
@@ -120,7 +120,7 @@ class FaceTracker:
                 in_frame = x >= 0 and x + w < self.camInfo['width'] and y > 0 and y + h < self.camInfo['height']
                 if in_frame:
                     self.targetFace = (x, y, w, h)
-                    self.lastGraceTime = None
+                    self.lastTrackFailTime = None
                 else:
                     success = False
             
