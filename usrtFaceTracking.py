@@ -111,11 +111,12 @@ class FaceTracker:
                 self.locked = True
                 self.lastGraceTime = None
         else:
-            success, self.targetFace = self.tracker.update(frame)
-            (x, y, w, h) = self.targetFace
+            success, newtargetFace = self.tracker.update(frame)
+            (x, y, w, h) = newtargetFace
             in_frame = x >= 0 & x + w < self.camInfo['width'] & y > 0 & y + h < self.camInfo['height']
-            if success & in_frame:
+            if success and in_frame:
                 #print("Success!")
+                self.targetFace = newtargetFace
                 self.lastGraceTime = None
             
             else:
@@ -169,7 +170,7 @@ class FaceTracker:
             elif self.targetAvgX < self.camInfo['width'] // 2:
                 return (self.camInfo['width'] // 2 - self.targetAvgX) / (self.camInfo['width'] // 2) * 10
             elif self.targetAvgX > self.camInfo['width'] // 2:
-                return -(self.targetAvgX - self.camInfo['width'] // 2) / self.camInfo['width'] * 10
+                return -(self.targetAvgX - self.camInfo['width'] // 2) / (self.camInfo['width'] // 2) * 10
         else:
             return 0
         return 400
