@@ -127,7 +127,7 @@ class FaceTracker:
                 if not success:
                     currentTime = time.time()
                     if self.lastTrackFailTime is None:
-                        self.lastGraceTime = currentTime
+                        self.lastTrackFailTime = currentTime
                     if currentTime - self.lastTrackFailTime >= self.TrackingGrace:
                         print("Time: ")
                         print(currentTime - self.lastTrackFailTime)
