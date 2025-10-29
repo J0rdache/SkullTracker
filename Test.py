@@ -59,13 +59,15 @@ def main():
     servo1 = sc.ServoController(SERVO_PIN, SERVO_MIN, SERVO_MAX, SPEED, REVERSE)
     t_servo = threading.Thread(target=servo_thread, args =(servo1,))
     t_servo.start()
-    while True:
-        status = int(input("Please enter status: "))
-        fifoQueue.put(status)
-        if status == 0:
-            break
-            
-    t_servo.join()
-
+    try:
+        while True:
+            status = int(input("Please enter status: "))
+            fifoQueue.put(status)
+            if status == 400:
+                break
+        t_servo.join()
+    except KeyboardInterrupt:
+        fifoQueue.put(400)
+        t_servo.join()
 if __name__ == "__main__":
     main()
