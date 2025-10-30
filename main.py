@@ -35,7 +35,7 @@ SERVO_MIN = 0.5
 # (Pulse width ms)
 SERVO_MAX = 2.5
 # (Degrees per second)
-SPEED = 60
+SPEED = 45
 # (Boolean)
 REVERSE = True
 
